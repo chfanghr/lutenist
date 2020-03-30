@@ -6,9 +6,10 @@
 #include <iostream>
 #include <csignal>
 
-#include "../../app.h"
+#include <lutenist/demo/app.h>
+#include <lutenist/demo/utils.h>
 
-class App : public demo::App {
+class App final : public demo::App {
  public:
   App() : demo::App() {
     demo::App::size_ = lutenist::Size2(1024, 768);
@@ -18,29 +19,53 @@ class App : public demo::App {
     signal(SIGINT, App::SignalHandler);
   }
 
-  void Draw() {
-    static size_t frame_counter = 0;
-
+  double Draw() {
     auto frame_start = std::chrono::system_clock::now();
     demo::App::Render();
     auto frame_end = std::chrono::system_clock::now();
 
     std::chrono::duration<double> diff = frame_end - frame_start;
 
-    std::cout << "frame " << frame_counter << " takes " << diff.count();
-    std::cout << ", ";
-    std::cout << "fps " << 1.0 / diff.count() << std::endl;
-
-    ++frame_counter;
+    return diff.count();
   }
 
   void DoResize() { demo::App::OnResized(); }
 
   static bool running_;
 
-  void Run() {
-    while (running_)
-      Draw();
+  uint64_t frame_count_ = 0;
+  double avg_frame_time_ = 0;
+
+  int Run() {
+    double local_frame_time_sum = 0;
+    size_t local_frame_count = 0;
+
+    while (running_) {
+      auto frame_time = Draw();
+
+      ++frame_count_;
+      ++local_frame_count;
+      local_frame_time_sum += frame_time / 100;
+      avg_frame_time_ = (avg_frame_time_ + frame_time) / (avg_frame_time_ == 0 ? 1 : 2);
+
+      if (local_frame_count == 100) {
+        demo::ShowFPS(1.0 / local_frame_time_sum);
+        local_frame_time_sum = local_frame_count = 0;
+      }
+    }
+
+    std::cout << std::endl
+              << demo::color::Modifier(demo::color::Modifier::Code::BG_BLUE)
+              << demo::color::Modifier(demo::color::Modifier::Code::FG_RED)
+              << "frame_count = " << frame_count_ << "; "
+              << "avg_frame_time = " << avg_frame_time_ << "; "
+              << "avg_fps = " << 1.0 / avg_frame_time_ << std::endl
+              << demo::color::Modifier(demo::color::Modifier::Code::BG_DEFAULT)
+              << demo::color::Modifier(demo::color::Modifier::Code::FG_DEFAULT);
+
+    std::cout.flush();
+    
+    return EXIT_SUCCESS;
   }
 
  private:
@@ -50,9 +75,5 @@ class App : public demo::App {
 bool App::running_ = true;
 
 int main() {
-  App app;
-
-  app.Run();
-
-  return EXIT_SUCCESS;
+  return App().Run();
 }

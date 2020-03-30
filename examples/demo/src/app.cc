@@ -2,9 +2,9 @@
 // Created by 方泓睿 on 2020/3/30.
 //
 
-#include "bmp.h"
-#include "app.h"
-#include "texture_shader.h"
+#include "lutenist/demo/bmp.h"
+#include "lutenist/demo/app.h"
+#include "lutenist/demo/texture_shader.h"
 
 namespace demo {
 App::App() :

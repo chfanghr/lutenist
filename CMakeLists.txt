@@ -30,11 +30,13 @@ ADD_LIBRARY(lutenist
     src/renderer.cc
     include/lutenist.h)
 
+INCLUDE_DIRECTORIES(examples/demo/include)
+
 ADD_LIBRARY(demo
-    examples/demo/app.cc
-    examples/demo/app.h
-    examples/demo/bmp.h
-    examples/demo/texture_shader.h)
+    examples/demo/src/app.cc
+    examples/demo/include/lutenist/demo/app.h
+    examples/demo/include/lutenist/demo/bmp.h
+    examples/demo/include/lutenist/demo/texture_shader.h examples/demo/include/lutenist/demo/utils.h examples/demo/src/texture_shader.cc examples/demo/src/utils.cc examples/demo/src/bmp.cc)
 
 ADD_EXECUTABLE(demo_fake_platform examples/demo/platforms/fake/main.cc)
 
