@@ -3,6 +3,21 @@ PROJECT(lutenist)
 
 SET(CMAKE_CXX_STANDARD 17)
 
+IF (EXISTS ${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+  INCLUDE(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+  CONAN_BASIC_SETUP()
+ELSE ()
+  MESSAGE(WARNING "The file conanbuildinfo.cmake doesn't exist, you have to run conan install first")
+ENDIF ()
+
+IF (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+  SET(SDLLib "-framework AudioToolbox -framework CoreAudio -framework Carbon")
+  SET(SDLLib ${SDLLib} "-framework ForceFeedback -framework IOKit -framework Cocoa -framework CoreVideo")
+  SET(SDLLib ${SDLLib} iconv SDL2)
+ELSE ()
+  SET(SDLLib SDL2)
+ENDIF ()
+
 INCLUDE_DIRECTORIES(include)
 
 ADD_LIBRARY(lutenist
@@ -30,14 +45,6 @@ ADD_LIBRARY(lutenist
     src/renderer.cc
     include/lutenist.h)
 
-INCLUDE_DIRECTORIES(examples/demo/include)
-
-ADD_LIBRARY(demo
-    examples/demo/src/app.cc
-    examples/demo/include/lutenist/demo/app.h
-    examples/demo/include/lutenist/demo/bmp.h
-    examples/demo/include/lutenist/demo/texture_shader.h examples/demo/include/lutenist/demo/utils.h examples/demo/src/texture_shader.cc examples/demo/src/utils.cc examples/demo/src/bmp.cc)
-
-ADD_EXECUTABLE(demo_fake_platform examples/demo/platforms/fake/main.cc)
-
-TARGET_LINK_LIBRARIES(demo_fake_platform demo lutenist)
+IF (BUILD_EXAMPLES)
+  ADD_SUBDIRECTORY(examples)
+ENDIF ()
