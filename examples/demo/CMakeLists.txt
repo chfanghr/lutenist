@@ -15,6 +15,8 @@ ELSE ()
   SET(SDLLib SDL2)
 ENDIF ()
 
+INCLUDE_DIRECTORIES(include)
+
 ADD_LIBRARY(demo
     include/lutenist/demo/app.h
     include/lutenist/demo/bmp.h
@@ -27,4 +29,8 @@ ADD_LIBRARY(demo
 
 ADD_EXECUTABLE(demo_fake_platform platforms/fake/main.cc)
 
+ADD_EXECUTABLE(demo_sdl platforms/sdl/main.cc)
+
 TARGET_LINK_LIBRARIES(demo_fake_platform demo lutenist)
+
+TARGET_LINK_LIBRARIES(demo_sdl demo lutenist ${SDLLib})

@@ -14,7 +14,8 @@ class Box {
  public:
   Vector<T, N> min_, max_;
 
-  constexpr inline Box() noexcept : min_{std::numeric_limits<T>::max()}, max_{std::numeric_limits<T>::lowest()} {}
+  constexpr inline Box() noexcept : min_{std::numeric_limits<T>::max(), std::numeric_limits<T>::max()},
+                                    max_{std::numeric_limits<T>::lowest(), std::numeric_limits<T>::lowest()} {}
 
   constexpr inline Box(const Vector<T, N> &min, const Vector<T, N> &max) noexcept  : min_(min), max_(max) {}
 
@@ -49,8 +50,8 @@ class Box {
   }
 
   constexpr inline void Clear() noexcept {
-    min_ = Vector < T, N > {std::numeric_limits<T>::max()};
-    max_ = Vector < T, N > {std::numeric_limits<T>::lowest()};
+    min_ = Vector<T, N>{std::numeric_limits<T>::max()};
+    max_ = Vector<T, N>{std::numeric_limits<T>::lowest()};
   }
 
   [[nodiscard]] constexpr inline bool IsEmpty() const noexcept {

@@ -17,7 +17,11 @@ constexpr inline bool IsInRange(const T &value, const T &min, const T &max, bool
 
 template<typename T>
 constexpr inline T Clamp(const T &x, const T &lo, const T &hi) noexcept {
-  return (x < lo) ? lo : ((x > hi) ? hi : x);
+  if (x < lo)
+    return lo;
+  if (x > hi)
+    return hi;
+  return x;
 }
 
 inline Vector3F Barycentric(Vector2F a, Vector2F b, Vector2F c, Vector2F p) noexcept {
