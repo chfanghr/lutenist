@@ -3,21 +3,6 @@ PROJECT(lutenist)
 
 SET(CMAKE_CXX_STANDARD 17)
 
-IF (EXISTS ${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-  INCLUDE(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-  CONAN_BASIC_SETUP()
-ELSE ()
-  MESSAGE(WARNING "The file conanbuildinfo.cmake doesn't exist, you have to run conan install first")
-ENDIF ()
-
-IF (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-  SET(SDLLib "-framework AudioToolbox -framework CoreAudio -framework Carbon")
-  SET(SDLLib ${SDLLib} "-framework ForceFeedback -framework IOKit -framework Cocoa -framework CoreVideo")
-  SET(SDLLib ${SDLLib} iconv SDL2)
-ELSE ()
-  SET(SDLLib SDL2)
-ENDIF ()
-
 INCLUDE_DIRECTORIES(include)
 
 ADD_LIBRARY(lutenist
