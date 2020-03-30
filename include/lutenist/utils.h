@@ -38,7 +38,7 @@ inline Vector3F Barycentric(Vector2F a, Vector2F b, Vector2F c, Vector2F p) noex
 
   if (std::abs(u[2]) < std::numeric_limits<float>::min()) // degenerate triangle (all three points in a line)
     return Vector3F{-1, 1, 1};
-  return Vector3F{1.0F - (u[0 + u[1]]) / u[2], u[1] / u[2], u[0] / u[2]};
+  return Vector3F{1.0F - (u[0] + u[1]) / u[2], u[1] / u[2], u[0] / u[2]};
 }
 }
 #endif //LUTENIST__UTILS_H_

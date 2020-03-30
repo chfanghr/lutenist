@@ -45,11 +45,13 @@ class Texture {
   float lod_bias{};
 
  public:
-  explicit Texture(PixelFormat pixel_format = PixelFormat::kRGBA8,
-                   size_t width = 0, size_t height = 0, bool mip_maps = false);
+  Texture() = default;
 
-  explicit Texture(PixelFormat pixel_format = PixelFormat::kRGBA8,
-                   const Size2 &size = Size2(0, 0), bool mip_maps = false);
+  explicit Texture(PixelFormat pixel_format,
+                   size_t width, size_t height, bool mip_maps = false);
+
+  explicit Texture(PixelFormat pixel_format,
+                   const Size2 &size, bool mip_maps = false);
 
   void Resize(const Size2 &size);
 

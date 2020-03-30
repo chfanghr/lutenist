@@ -2,8 +2,8 @@
 // Created by 方泓睿 on 2020/3/30.
 //
 
-#include "../include/lutenist/render_error.h"
-#include "../include/lutenist/renderer.h"
+#include <lutenist/render_error.h>
+#include <lutenist/renderer.h>
 
 namespace lutenist {
 void Renderer::Clear(const Color color, const float depth) {
@@ -18,7 +18,7 @@ void Renderer::Clear(const Color color, const float depth) {
     render_target_data.depth_buffer_data[p] = depth;
 }
 
-void Renderer::DrawTriangles(const std::vector<uint32_t> &indices,
+void Renderer::DrawTriangles(const std::vector<size_t> &indices,
                              const std::vector<Vertex> &vertices,
                              const lutenist::Matrix4F &model_view_projection) {
   auto render_target_data = MakeRenderTargetData();

@@ -2,7 +2,7 @@
 // Created by 方泓睿 on 2020/3/29.
 //
 
-#include "../include/lutenist/texture.h"
+#include <lutenist/texture.h>
 
 namespace lutenist {
 Texture::Texture(lutenist::Texture::PixelFormat pixel_format, size_t width,
@@ -97,7 +97,7 @@ void Texture::GenerateMipMaps() {
     if (new_size.Width() < 1) new_size.Width() = 1;
     if (new_size.Height() < 1) new_size.Width() = 1;
 
-    if (level > levels_.size())
+    if (level >= levels_.size())
       levels_.emplace_back(new_size.Width() * new_size.Height() * pixel_size);
 
     if (pixel_format_ != PixelFormat::kFloat32) {

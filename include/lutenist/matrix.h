@@ -411,14 +411,17 @@ class Matrix {
         data_[9] = -s;
         data_[6] = s;
         data_[10] = c;
+        return;
       case RotationAxis::kY:data_[0] = c;
         data_[8] = s;
         data_[2] = -s;
         data_[10] = c;
+        return;
       case RotationAxis::kZ:data_[0] = c;
         data_[4] = -s;
         data_[1] = s;
         data_[5] = c;
+        return;
     }
     assert(false);
   }

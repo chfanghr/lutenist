@@ -29,3 +29,13 @@ ADD_LIBRARY(lutenist
     include/lutenist/blend_state.h
     src/renderer.cc
     include/lutenist.h)
+
+ADD_LIBRARY(demo
+    examples/demo/app.cc
+    examples/demo/app.h
+    examples/demo/bmp.h
+    examples/demo/texture_shader.h)
+
+ADD_EXECUTABLE(demo_fake_platform examples/demo/platforms/fake/main.cc)
+
+TARGET_LINK_LIBRARIES(demo_fake_platform demo lutenist)

@@ -33,11 +33,10 @@ class Renderer {
 
   void Clear(Color color, float depth) noexcept(false);
 
- private:
-  void DrawTriangles(const std::vector<uint32_t> &indices,
+  void DrawTriangles(const std::vector<size_t> &indices,
                      const std::vector<Vertex> &vertices,
                      const Matrix4F &model_view_projection) noexcept(false);
-
+ private:
   void CheckRenderTarget() noexcept(false);
 
   void CheckShader() noexcept(false);
